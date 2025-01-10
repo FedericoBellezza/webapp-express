@@ -1,7 +1,9 @@
-function notFound(err, req, res, next) {
+function errorsHandler(err, req, res, next) {
   res.status(err.code ?? 500);
   res.json({
     status: "KO",
     error: err.message,
   });
 }
+
+module.exports = errorsHandler;

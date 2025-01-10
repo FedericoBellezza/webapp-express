@@ -5,3 +5,5 @@ function notFound(req, res, next) {
     error: "Page not found",
   });
 }
+
+module.exports = notFound;
