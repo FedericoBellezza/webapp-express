@@ -16,14 +16,14 @@ function show(req, res) {
   getMovieFromID = "SELECT * FROM movies WHERE id = ?";
   getReviewsFromID = "SELECT * FROM movies.reviews WHERE movie_id = ?";
   id = req.params.id;
-  const finalRes = [];
+  let finalRes = {};
 
   // get movie from id
   connection.query(getMovieFromID, [id], (err, result) => {
     // if error
     if (err) return res.status(500).json({ error: err });
 
-    finalRes.push({ movie: result });
+    finalRes = { movie: result };
   });
 
   // get reviews from id
@@ -31,9 +31,9 @@ function show(req, res) {
     // if error
     if (err) return res.status(500).json({ error: err });
 
-    finalRes.push({ reviews: result });
+    finalRes.reviews = result;
+
     res.json(finalRes);
-    console.log(finalRes.movie);
   });
 }
 
