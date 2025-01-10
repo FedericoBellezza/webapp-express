@@ -4,7 +4,6 @@ const connection = require("../db/conn");
 function index(req, res) {
   connection.query("SELECT * FROM movies", (err, result) => {
     // if error
-    console.log(err);
     if (err) return res.status(500).json({ error: "Database query failed" });
 
     res.json(result);
@@ -17,13 +16,12 @@ function show(req, res) {
   getMovieFromID = "SELECT * FROM movies WHERE id = ?";
   getReviewsFromID = "SELECT * FROM movies.reviews WHERE movie_id = ?";
   id = req.params.id;
-  finalRes = [];
+  const finalRes = [];
 
   // get movie from id
   connection.query(getMovieFromID, [id], (err, result) => {
     // if error
-    console.log(err);
-    if (err) return res.status(500).json({ error: "Database query failed" });
+    if (err) return res.status(500).json({ error: err });
 
     finalRes.push({ movie: result });
   });
@@ -31,12 +29,11 @@ function show(req, res) {
   // get reviews from id
   connection.query(getReviewsFromID, [id], (err, result) => {
     // if error
-    console.log(err);
-    if (err) return res.status(500).json({ error: "Database query failed" });
+    if (err) return res.status(500).json({ error: err });
 
     finalRes.push({ reviews: result });
     res.json(finalRes);
-    console.log(finalRes);
+    console.log(finalRes.movie);
   });
 }
 
