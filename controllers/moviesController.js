@@ -40,14 +40,14 @@ function show(req, res) {
 // delete
 function destroy(req, res) {
   // query preparation
-  const deleteMovieFromID = "DELETE FROM `movies`.`movies` WHERE `id` = ?";
+  const deleteMovieFromID = "DELETE FROM movies.movies WHERE movies.id = ?";
   const id = req.params.id;
 
-  // get movie from id
+  // delete movie from id
   connection.query(deleteMovieFromID, [id], (err, result) => {
     // if error
     if (err) return res.status(500).json({ error: err });
-    res.json(result);
+    res.json(`Eliminato il film con id ${id}`);
   });
 }
 
