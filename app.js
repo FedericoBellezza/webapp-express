@@ -5,6 +5,9 @@ const app = express();
 // import env
 const { APP_HOST, APP_PORT } = process.env;
 
+// register middlewares
+app.use(express.static("public"));
+
 // routes
 const moviesRouter = require("./routers/moviesRouter");
 app.use("/movies", moviesRouter);
