@@ -13,9 +13,9 @@ function index(req, res) {
 // show
 function show(req, res) {
   // query preparation
-  getMovieFromID = "SELECT * FROM movies WHERE id = ?";
-  getReviewsFromID = "SELECT * FROM movies.reviews WHERE movie_id = ?";
-  id = req.params.id;
+  const getMovieFromID = "SELECT * FROM movies WHERE id = ?";
+  const getReviewsFromID = "SELECT * FROM movies.reviews WHERE movie_id = ?";
+  const id = req.params.id;
   let finalRes = {};
 
   // get movie from id
@@ -37,4 +37,18 @@ function show(req, res) {
   });
 }
 
-module.exports = { index, show };
+// delete
+function destroy(req, res) {
+  // query preparation
+  const deleteMovieFromID = "DELETE FROM `movies`.`movies` WHERE `id` = ?";
+  const id = req.params.id;
+
+  // get movie from id
+  connection.query(deleteMovieFromID, [id], (err, result) => {
+    // if error
+    if (err) return res.status(500).json({ error: err });
+    res.json(result);
+  });
+}
+
+module.exports = { index, show, destroy };
