@@ -3,11 +3,19 @@ const express = require("express");
 const app = express();
 
 // import env
-const { APP_HOST, APP_PORT } = process.env;
+const { APP_HOST, APP_PORT, APP_FRONTEND_URL } = process.env;
 
 // public folder
 app.use(express.static("public"));
 app.use(express.json());
+
+// cors
+const cors = require("cors");
+const corsOptions = {
+  origin: APP_FRONTEND_URL,
+  optionsSuccessStatus: 200, // some legacy browsers (IE11, various SmartTVs) choke on 204
+};
+app.use(cors(corsOptions));
 
 // routes
 const moviesRouter = require("./routers/moviesRouter");

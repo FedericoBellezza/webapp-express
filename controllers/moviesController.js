@@ -37,6 +37,24 @@ function show(req, res) {
   });
 }
 
+// store review
+function storeReview(req, res) {
+  const movieId = req.params.id;
+  const name = req.body.name;
+  const vote = req.body.vote;
+  const text = req.body.text;
+  const sql = `
+  INSERT INTO movies.reviews (movie_id, name, vote, text) VALUES (?,?,?,?)
+  `;
+  // get movie from id
+  connection.query(sql, [movieId, name, vote, text], (err) => {
+    // if error
+    if (err) return res.status(500).json({ error: err });
+
+    res.json("Review creata");
+  });
+}
+
 // delete
 function destroy(req, res) {
   // query preparation
@@ -51,4 +69,4 @@ function destroy(req, res) {
   });
 }
 
-module.exports = { index, show, destroy };
+module.exports = { index, show, destroy, storeReview };
