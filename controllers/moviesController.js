@@ -55,6 +55,22 @@ function storeReview(req, res) {
   });
 }
 
+// delete review
+function destroyReview(req, res) {
+  const reviewId = req.body.reviewId;
+
+  const sql = `
+  DELETE FROM movies.reviews WHERE (id = ?);
+  `;
+  // get movie from id
+  connection.query(sql, [reviewId], (err) => {
+    // if error
+    if (err) return res.status(500).json({ error: err });
+
+    res.json("Review eliminata");
+  });
+}
+
 // delete
 function destroy(req, res) {
   // query preparation
@@ -69,4 +85,4 @@ function destroy(req, res) {
   });
 }
 
-module.exports = { index, show, destroy, storeReview };
+module.exports = { index, show, destroy, storeReview, destroyReview };
